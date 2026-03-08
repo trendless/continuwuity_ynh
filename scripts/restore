@@ -1,0 +1,44 @@
+#!/bin/bash
+
+source /usr/share/yunohost/helpers
+
+#=================================================
+# RESTORE THE APP MAIN DIR
+#=================================================
+ynh_script_progression "Restoring the app main directory..."
+
+ynh_restore "$install_dir"
+
+chown -R $app:root "$install_dir"
+
+#=================================================
+# RESTORE SYSTEM CONFIGURATIONS
+#=================================================
+ynh_script_progression "Restoring system configurations related to $app..."
+
+ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
+
+if yunohost --output-as plain domain list | grep -q "^$server_name$"
+then
+	ynh_restore "/etc/nginx/conf.d/${server_name}.d/${app}_server_name.conf"
+fi
+
+ynh_restore "/etc/systemd/system/$app.service"
+systemctl enable $app.service --quiet
+
+yunohost service add $app --description="Matrix homeserver written in Rust" --log="/var/log/$app/$app.log"
+
+#=================================================
+# RELOAD NGINX AND PHP-FPM OR THE APP SERVICE
+#=================================================
+ynh_script_progression "Reloading NGINX web server and $app's service..."
+
+ynh_systemctl --service=$app --action="start" --log_path="systemd"
+
+ynh_systemctl --service=nginx --action=reload
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Restoration completed for $app"

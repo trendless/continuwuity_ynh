@@ -1,0 +1,34 @@
+#!/bin/bash
+
+source /usr/share/yunohost/helpers
+
+ynh_print_info "Declaring files to be backed up..."
+
+#=================================================
+# BACKUP THE APP MAIN DIR
+#=================================================
+
+ynh_backup "$install_dir"
+
+#=================================================
+# BACKUP THE NGINX CONFIGURATION
+#=================================================
+
+ynh_backup "/etc/nginx/conf.d/$domain.d/$app.conf"
+
+if yunohost --output-as plain domain list | grep -q "^$server_name$"
+then
+    ynh_backup "/etc/nginx/conf.d/${server_name}.d/${app}_server_name.conf"
+fi
+
+#=================================================
+# BACKUP SYSTEMD
+#=================================================
+
+ynh_backup "/etc/systemd/system/$app.service"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_print_info "Backup script completed for $app. (YunoHost will then actually copy those files to the archive)."

@@ -1,0 +1,79 @@
+version = "1.0"
+
+[main]
+name = "Continuwuity configuration"
+services = ["__APP__"]
+
+    [main.registration]
+
+        [main.registration.allow_federation]
+        ask = "Allow Federation?"
+        help = "Communicate with users of other Matrix homeservers; eg, `matrix.org`"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+        bind = ":__INSTALL_DIR__/continuwuity.toml"
+
+        [main.registration.allow_registration]
+        ask = "Should registration be enabled?"
+        help = "Allow new accounts to be created by users"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+        bind = ":__INSTALL_DIR__/continuwuity.toml"
+
+        [main.registration.yes_i_am_very_very_sure_i_want_an_open_registration_server_prone_to_abuse]
+        ask = "Should registration be allowed without a registration token?"
+        help = "Allowing registration without a token means anyone can sign up for an account; this is prone to abuse."
+        type = "boolean"
+        yes = "true"
+        no = "false"
+        bind = ":__INSTALL_DIR__/continuwuity.toml"
+        visible = "allow_registration"
+
+        [main.registration.registration_token]
+        ask = "Registration token"
+        type = "string"
+        readonly = true
+        bind = ":__INSTALL_DIR__/continuwuity.toml"
+        visible = "allow_registration && !yes_i_am_very_very_sure_i_want_an_open_registration_server_prone_to_abuse"
+
+        [main.registration.suspend_on_register]
+        ask.en = "Should the server automatically suspend newly-registered users until an admin manually enables them?"
+        ask.fr = "?"
+        help.en = "To manually enable a user, an admin must run `!admin users unsuspend <user_id>`. Suspended users are still able to read messages, update their profile, leave rooms, and deactivate their account; they cannot send messages, invites, or create/join or otherwise modify rooms. They are effectively read-only. If you want to use this to screen people who register on your server, you should add a room to `auto_join_rooms` that is public, and contains information that new users can read (since they won't be able to DM or message anyone and may be confused)."
+        help.fr = ""
+        type = "boolean"
+        yes = "true"
+        no = "false"
+        bind = ":__INSTALL_DIR__/continuwuity.toml"
+        visible = "allow_registration"
+
+        #[main.registration.auto_join_rooms]
+        #ask.en = "To which room(s) should newly-registered users be auto-joined?"
+        #help.en = "List/vector of room IDs or room aliases that continuwuity will make newly registered users join. The rooms specified must be rooms that you have joined at least once on the server, and must be public."
+        #example.en = "["#continuwuity:continuwuity.org", "!main-1:continuwuity.org"]"
+        #type = "string"
+        #bind = "null"
+
+        [main.registration.recaptcha_enable]
+        ask.en = "Should the server use reCaptcha to protect the registration process?"
+        ask.fr = ""
+        help.en = "Verify the origin of reCaptcha solutions; *must be disabled if you want the captcha to work in 3rd-party clients or clients hosted on other domains*"
+        help.fr = ""
+        type = "boolean"
+        yes = "true"
+        no = "false"
+        visible = "allow_registration"
+        
+        [main.registration.recaptcha_site_key]
+        ask.en = "Enter the reCaptcha site key:"
+        type = "string"
+        bind = ":__INSTALL_DIR__/continuwuity.toml"
+        visible = "recaptcha_enable"
+        
+        [main.registration.recaptcha_private_site_key]
+        ask.en = "Enter the reCaptcha private site key:"
+        type = "string"
+        bind = ":__INSTALL_DIR__/continuwuity.toml"
+        visible = "recaptcha_enable"

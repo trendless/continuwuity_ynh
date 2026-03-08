@@ -1,0 +1,16 @@
+#!/bin/bash
+source /usr/share/yunohost/helpers
+
+ynh_abort_if_errors
+
+#get__auto_join_rooms() {
+#    echo "$(yq -o=json '.auto_join_rooms' $install_dir/continuwuity.toml)"
+#}
+
+#set__auto_join_rooms() {
+#    echo "yq -i '.auto_join_rooms = $auto_join_rooms' config.toml)
+#    ynh_print_info "The list of rooms to auto-join has been changed"
+#}
+
+# Keep this last line
+ynh_app_config_run $1

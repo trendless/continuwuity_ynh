@@ -1,0 +1,100 @@
+packaging_format = 2
+
+id = "continuwuity"
+name = "Continuwuity"
+description.en = "A community-driven Matrix homeserver"
+description.fr = ""
+
+version = "0.5.6~ynh1"
+
+maintainers = []
+
+[upstream]
+license = "Apache-2.0"
+website = "https://continuwuity.org"
+admindoc = "https://continuwuity.org/configuration.html"
+code = "https://forgejo.ellis.link/continuwuation/continuwuity"
+
+[integration]
+yunohost = ">= 12.1.9"
+helpers_version = "2.1"
+architectures = [ "arm64", "amd64" ]
+multi_instance = true
+
+ldap = true
+sso = false
+
+disk = "50M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "visitors"
+    help.en = "If you want to be able to federate with other servers, you must choose `visitors`"
+    help.fr = ""
+
+    [install.server_name]
+    ask.en = "Select the display name for your Continuwuity server"
+    ask.fr = "Sélectionnez le nom d'affichage pour votre serveur Continuwuity"
+    help.en = "If you choose domain.tld, your Matrix user-ids will be @user:domain.tld"
+    help.fr = ""
+    type = "domain"
+
+    [install.registration]
+    ask.en = "Should the server allow registration?"
+    ask.fr = ""
+    type = "boolean"
+    yes = "true"
+    no = "false"
+    help.en = "If no, accounts can still be registered by an admin."
+    help.fr = ""
+    default = 0
+
+[resources]
+
+    [resources.sources]
+
+        [resources.sources.main]
+        extract = false
+        format = "binary"
+        rename = "continuwuity"
+        arm64.url = "https://forgejo.ellis.link/continuwuation/continuwuity/releases/download/v0.5.6/conduwuit-linux-arm64"
+        arm64.sha256 = "5fb73226ea116ea5db2146c5363671f563904f0446b009924d2a1976e9a0d0d4"
+        amd64.url = "https://forgejo.ellis.link/continuwuation/continuwuity/releases/download/v0.5.6/conduwuit-haswell-linux-amd64-maxperf"
+        amd64.sha256 = "d5f32d6a40958ed6704b839e8c4c8955e68f1dffc780b742b07fa27adb26d36a"
+        autoupdate.strategy = "latest_forgejo_release"
+        autoupdate.asset.arm64 = "^conduwuit-linux-arm64$"
+        autoupdate.asset.amd64 = "^conduwuit-haswell-linux-amd64-maxperf$"
+
+[resources.system_user]
+
+[resources.install_dir]
+
+[resources.permissions]
+main.url = "/"
+main.show_tile = false
+server_api.url = "/_matrix"
+server_api.label = "Server access for client apps."
+server_api.show_tile = false
+server_api.allowed = "visitors"
+server_api.auth_header = false
+server_api.protected = true
+server_client_infos.url = "/.well-known/matrix"
+server_client_infos.label = "Server info for federation. (well-known)"
+server_client_infos.show_tile = false
+server_client_infos.allowed = "visitors"
+server_client_infos.auth_header = false
+server_client_infos.protected = true
+admin.show_tile = false
+admin.allowed = "admins"
+admin.label = "Continuwuity server admins"
+
+[resources.ports]
+
+[resources.apt]
+packages = "liburing2, libjemalloc-dev, yq"

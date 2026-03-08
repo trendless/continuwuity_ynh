@@ -1,0 +1,62 @@
+#!/bin/bash
+
+source /usr/share/yunohost/helpers
+
+#=================================================
+# STOP SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Stopping $app's systemd service..."
+
+ynh_systemctl --service=$app --action="stop" --log_path="systemd"
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression "Upgrading source files..."
+
+ynh_setup_source --dest_dir="$install_dir" --keep="continuwuity.toml"
+
+chown -R $app:root "$install_dir"
+chmod +x "$install_dir/continuwuity"
+
+#=================================================
+# REAPPLY SYSTEM CONFIGURATIONS
+#=================================================
+ynh_script_progression "Upgrading system configurations related to $app..."
+
+ynh_config_add_nginx
+
+# Create .well-known redirection for access by federation
+if yunohost --output-as plain domain list | grep -q "^$server_name$"
+then
+    ynh_config_add --template="server_name.conf" --destination="/etc/nginx/conf.d/${server_name}.d/${app}_server_name.conf"
+fi
+
+ynh_config_add_systemd
+
+yunohost service add $app --description="Matrix homeserver written in Rust" --log="/var/log/$app/$app.log"
+
+#=================================================
+# RECONFIGURE THE APP (UPDATE CONF, APPLY MIGRATIONS...)
+#=================================================
+# UPDATE A CONFIG FILE
+#=================================================
+ynh_script_progression "Updating configuration..."
+
+ynh_config_add --template="continuwuity.toml" --destination="$install_dir/continuwuity.toml"
+
+chmod 400 "$install_dir/continuwuity.toml"
+chown $app:$app "$install_dir/continuwuity.toml"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
+
+ynh_systemctl --service=$app --action="start" --log_path="systemd"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Upgrade of $app completed"
