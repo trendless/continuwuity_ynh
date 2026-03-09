@@ -3,7 +3,7 @@ packaging_format = 2
 id = "continuwuity"
 name = "Continuwuity"
 description.en = "A community-driven Matrix homeserver"
-description.fr = ""
+description.fr = "Un serveur à domicile Matrix axé sur la communauté"
 
 version = "0.5.6~ynh1"
 
@@ -36,24 +36,24 @@ ram.runtime = "50M"
     type = "group"
     default = "visitors"
     help.en = "If you want to be able to federate with other servers, you must choose `visitors`"
-    help.fr = ""
+    help.fr = "Si vous voulez être en mesure de fédérer avec d'autres serveurs, vous devez choisir `visitors`"
 
     [install.server_name]
     ask.en = "Select the account domain"
-    ask.fr = ""
+    ask.fr = "Sélectionnez le domaine du compte"
     help.en = "The domain you choose will set how your user accounts are displayed and discovered. eg, if `domain.tld` is selected, accounts will be `@user:domain.tld`"
-    help.fr = ""
+    help.fr = "Le domaine que vous choisissez définira comment vos comptes utilisateurs sont affichés et découverts. Par exemple, si `domain.tld` est sélectionné, les comptes seront `@user:domain.tld`"
     type = "domain"
 
     [install.registration]
     ask.en = "Should the server allow registration?"
-    ask.fr = ""
+    ask.fr = "Le serveur devrait-il autoriser l'enregistrement ?"
     type = "boolean"
     yes = "true"
     no = "false"
     help.en = "If no, accounts can still be manually created by an admin. In either case, all of this Yunohost server's users will be able to log in."
-    help.fr = ""
-    default = 0
+    help.fr = "Si non, les comptes peuvent encore être créés manuellement par un administrateur. Dans les deux cas, tous les utilisateurs de ce serveur Yunohost pourront se connecter."
+    default = false
 
 [resources]
 

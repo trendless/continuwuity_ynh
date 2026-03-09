@@ -1,30 +1,36 @@
 version = "1.0"
 
 [main]
-name = "Continuwuity configuration"
+name.en = "Continuwuity configuration"
 services = ["__APP__"]
 
     [main.registration]
 
         [main.registration.allow_federation]
-        ask = "Allow Federation?"
-        help = "Communicate with users of other Matrix homeservers; eg, `matrix.org`"
+        ask.en = "Allow Federation?"
+        ask.fr = "Autoriser la Fédération ?"
+        help.en = "Enables communication with users of other Matrix homeservers; eg, `matrix.org`"
+        help.fr = "Permet la communication avec les utilisateurs d'autres serveurs domestiques Matrix; par exemple, `matrix.org`"
         type = "boolean"
         yes = "true"
         no = "false"
         bind = ":__INSTALL_DIR__/continuwuity.toml"
 
         [main.registration.allow_registration]
-        ask = "Should registration be enabled?"
-        help = "Allow new accounts to be created by users"
+        ask.en = "Should registration be enabled?"
+        ask.fr = "L'enregistrement devrait-il être activé?"
+        help.en = "Allows new accounts to be created by users"
+        help.fr = "Permet la création de nouveaux comptes par les utilisateurs"
         type = "boolean"
         yes = "true"
         no = "false"
         bind = ":__INSTALL_DIR__/continuwuity.toml"
 
         [main.registration.yes_i_am_very_very_sure_i_want_an_open_registration_server_prone_to_abuse]
-        ask = "Should registration be allowed without a registration token?"
-        help = "Allowing registration without a token means anyone can sign up for an account; this is prone to abuse."
+        ask.en = "Should registration be allowed without a registration token?"
+        ask.fr = "L'enregistrement devrait-il être autorisé sans jeton d'enregistrement?"
+        help.en = "Allowing registration without a token means anyone can sign up for an account; this is prone to abuse"
+        help.fr = "Permettre l'inscription sans jeton signifie que tout le monde peut s'inscrire à un compte; cela est sujet à des abus"
         type = "boolean"
         yes = "true"
         no = "false"
@@ -32,7 +38,8 @@ services = ["__APP__"]
         visible = "allow_registration"
 
         [main.registration.registration_token]
-        ask = "Registration token"
+        ask.en = "Registration token"
+        ask.fr = "Jeton d'enregistrement"
         type = "string"
         readonly = true
         bind = ":__INSTALL_DIR__/continuwuity.toml"
@@ -40,9 +47,9 @@ services = ["__APP__"]
 
         [main.registration.suspend_on_register]
         ask.en = "Should the server automatically suspend newly-registered users until an admin manually enables them?"
-        ask.fr = "?"
-        help.en = "To manually enable a user, an admin must run `!admin users unsuspend <user_id>`. Suspended users are still able to read messages, update their profile, leave rooms, and deactivate their account; they cannot send messages, invites, or create/join or otherwise modify rooms. They are effectively read-only. If you want to use this to screen people who register on your server, you should add a room to `auto_join_rooms` that is public, and contains information that new users can read (since they won't be able to DM or message anyone and may be confused)."
-        help.fr = ""
+        ask.fr = "Le serveur devrait-il suspendre automatiquement les utilisateurs nouvellement enregistrés jusqu'à ce qu'un administrateur les active manuellement ?"
+        help.en = "To manually enable a user, an admin must run `!admin users unsuspend <user_id>`. Suspended users are still able to read messages, update their profile, leave rooms, and deactivate their account; they cannot send messages, invites, or create/join or otherwise modify rooms. They are effectively read-only. If you want to use this to screen people who register on your server, you should add a room to `auto_join_rooms` that is public, and contains information that new users can read (since they won't be able to DM or message anyone and may be confused)"
+        help.fr = "Pour activer manuellement un utilisateur, un administrateur doit exécuter `!admin users unsuspend <user_id>`. Les utilisateurs suspendus sont toujours en mesure de lire les messages, de mettre à jour leur profil, de laisser des salles et de désactiver leur compte; ils ne peuvent pas envoyer des messages, inviter, créer/ rejoindre ou modifier d'une autre manière des salles. Ils sont effectivement en lecture seule. Si vous voulez utiliser ceci pour filtrer les personnes qui s'inscrivent sur votre serveur, vous devriez ajouter une pièce à `auto join rooms` qui est publique, et contient des informations que les nouveaux utilisateurs peuvent lire (puisqu'ils ne pourront pas DM ou messageer n'importe qui et peuvent être confondus)"
         type = "boolean"
         yes = "true"
         no = "false"
@@ -58,9 +65,9 @@ services = ["__APP__"]
 
         [main.registration.recaptcha_enable]
         ask.en = "Should the server use reCaptcha to protect the registration process?"
-        ask.fr = ""
+        ask.fr = "Le serveur devrait-il utiliser reCaptcha pour protéger le processus d'enregistrement?"
         help.en = "Verify the origin of reCaptcha solutions; *must be disabled if you want the captcha to work in 3rd-party clients or clients hosted on other domains*"
-        help.fr = ""
+        help.fr = "Vérifier l'origine des solutions reCaptcha; *doit être désactivé si vous voulez que la captcha fonctionne dans des clients tiers ou des clients hébergés sur d'autres domaines*"
         type = "boolean"
         yes = "true"
         no = "false"
@@ -68,12 +75,14 @@ services = ["__APP__"]
         
         [main.registration.recaptcha_site_key]
         ask.en = "Enter the reCaptcha site key:"
+        ask.fr = "Saisissez la clé du site reCaptcha :"
         type = "string"
         bind = ":__INSTALL_DIR__/continuwuity.toml"
         visible = "recaptcha_enable"
         
         [main.registration.recaptcha_private_site_key]
         ask.en = "Enter the reCaptcha private site key:"
+        ask.fr = "Entrez la clé de site privé reCaptcha:"
         type = "string"
         bind = ":__INSTALL_DIR__/continuwuity.toml"
         visible = "recaptcha_enable"
