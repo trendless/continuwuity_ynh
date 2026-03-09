@@ -39,9 +39,9 @@ ram.runtime = "50M"
     help.fr = ""
 
     [install.server_name]
-    ask.en = "Select the display name for your Continuwuity server"
-    ask.fr = "Sélectionnez le nom d'affichage pour votre serveur Continuwuity"
-    help.en = "If you choose domain.tld, your Matrix user-ids will be @user:domain.tld"
+    ask.en = "Select the account domain"
+    ask.fr = ""
+    help.en = "The domain you choose will set how your user accounts are displayed and discovered. eg, if `domain.tld` is selected, accounts will be `@user:domain.tld`"
     help.fr = ""
     type = "domain"
 
@@ -51,7 +51,7 @@ ram.runtime = "50M"
     type = "boolean"
     yes = "true"
     no = "false"
-    help.en = "If no, accounts can still be registered by an admin."
+    help.en = "If no, accounts can still be manually created by an admin. In either case, all of this Yunohost server's users will be able to log in."
     help.fr = ""
     default = 0
 

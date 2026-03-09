@@ -14,9 +14,9 @@ ynh_systemctl --service=$app --action="stop" --log_path="systemd"
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-ynh_setup_source --dest_dir="$install_dir" --keep="continuwuity.toml"
+ynh_setup_source --dest_dir="$install_dir" --keep="continuwuity.toml continuwuity-db"
 
-chown -R $app:root "$install_dir"
+chown -R $app:$app "$install_dir"
 chmod +x "$install_dir/continuwuity"
 
 #=================================================
@@ -35,15 +35,6 @@ fi
 ynh_config_add_systemd
 
 yunohost service add $app --description="Matrix homeserver written in Rust" --log="/var/log/$app/$app.log"
-
-#=================================================
-# RECONFIGURE THE APP (UPDATE CONF, APPLY MIGRATIONS...)
-#=================================================
-# UPDATE A CONFIG FILE
-#=================================================
-ynh_script_progression "Updating configuration..."
-
-ynh_config_add --template="continuwuity.toml" --destination="$install_dir/continuwuity.toml"
 
 chmod 400 "$install_dir/continuwuity.toml"
 chown $app:$app "$install_dir/continuwuity.toml"

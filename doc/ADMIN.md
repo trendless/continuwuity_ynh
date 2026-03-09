@@ -1,18 +1,13 @@
 ### Login to Continuwuity
 
-LDAP is supported upstream, log in with normal YNH credentials.
+Yunohost LDAP is supported; you can log in with users that exist in Yunohost.
 
 ###  Coturn configuration
 
-To be able to take advantage of audio and video call functionalities, a Coturn server is often required. It is possible to [install a Coturn server in YunoHost](https://github.com/YunoHost-Apps/coturn-ynh/blob/master/README-en.md).
-It is then necessary to fill in the information provided by the Coturn server in the file 'continuwuity.toml' such as:
+To enable audio and video calling, a Coturn server may be required. The Yunohost [Coturn package](https://github.com/YunoHost-Apps/coturn-ynh/blob/master/README-en.md) is a compatible option. Once installed, use the `username`, `password`, and URL provided to fill in the following fields in `__INSTALL_DIR__/continuwuity.toml`:
+- turn_uris = ["turns:`turn.domain.tld`:5349?transport=udp", "turns:`turn.domain.tld`:5349?transport=tcp"]
+- turn_username = "`username`"
+- turn_password = "`password`"
 
-```
-turn_uris = ["turns:your.turn.url:5349?transport=udp", "turns:your.turn.url:5349?transport=tcp"]
-turn_username = "<YOUR_USERNAME>"
-turn_password = "<YOUR_PASSWORD>"
-```
-If your Coturn (not YunoHost's one) does not use TLS, you might need to change a little bit like:
-```
-turn_uris = ["turn:your.turn.url:5349?transport=udp", "turn:your.turn.url:5349?transport=tcp"]
-``
+If you use a different implementation of coturn which does not use TLS, you may need to specify `turn` instead of `turns`:
+- turn_uris = ["turn:`turn.domain.tld`:5349?transport=udp", "turn:`turn.domain.tld`:5349?transport=tcp"]
