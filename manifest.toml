@@ -7,7 +7,7 @@ description.fr = "Un serveur à domicile Matrix axé sur la communauté"
 
 version = "0.5.6~ynh1"
 
-maintainers = []
+maintainers = ["trendless"]
 
 [upstream]
 license = "Apache-2.0"
